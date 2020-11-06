@@ -1,5 +1,6 @@
 .DS_Store
 .ipynb_checkpoints
-src/results
 __pycache__
 venv/
+src/results
+dataset/test/
