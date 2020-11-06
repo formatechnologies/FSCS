@@ -27,7 +27,7 @@ import pandas as pd
 
 ### User inputs
 num_clusters = 7
-img_name = "apple.jpg"
+img_name = "screen_shot_2020-11-06_at_10.59.05_am.png"
 img_path = "../dataset/test/" + img_name
 
 ###
@@ -56,7 +56,6 @@ for k, i in enumerate(model.cluster_centers_):
         end=" ",
     )
 
-
 #### User inputs
 
 run_name = "sample"
@@ -65,14 +64,8 @@ csv_path = "sample.csv"  # なんでも良い．後方でパスを置き換え�
 resize_scale_factor = 1
 
 # image name and palette color values
-img_name = "apple.jpg"
-manual_color_0 = [253, 253, 254]
-manual_color_1 = [203, 194, 170]
-manual_color_2 = [83, 17, 22]
-manual_color_3 = [205, 118, 4]
-manual_color_4 = [220, 222, 11]
-manual_color_5 = [155, 24, 10]
-manual_color_6 = [171, 75, 67]
+img_name = 'screen_shot_2020-11-06_at_10.59.05_am.png'; manual_color_0 = [241, 241, 241]; manual_color_1 = [33, 32, 33]; manual_color_2 = [159, 122, 107]; manual_color_3 = [153, 24, 42]; manual_color_4 = [73, 75, 64]; manual_color_5 = [63, 158, 125]; manual_color_6 = [203, 171, 150]
+# img_name = "apple.jpg"; manual_color_0 = [253, 253, 254]; manual_color_1 = [203, 194, 170]; manual_color_2 = [83, 17, 22]; manual_color_3 = [205, 118, 4]; manual_color_4 = [220, 222, 11]; manual_color_5 = [155, 24, 10]; manual_color_6 = [171, 75, 67]
 # img_name = 'boat.png'; manual_color_0 = [25, 21, 16]; manual_color_1 = [153, 155, 163]; manual_color_2 = [177,189,206]; manual_color_3 = [94, 89, 88]; manual_color_4 = [213, 215, 221]; manual_color_5 = [85,26,20]; manual_color_6 = [160,217,214];
 # img_name = 'buildings.png'; manual_color_0 = [59, 66, 80]; manual_color_1 = [12, 12, 11]; manual_color_2 = [65, 56, 43]; manual_color_3 = [78, 92, 120]; manual_color_4 = [223, 192, 124]; manual_color_5 = [128, 102, 63]; manual_color_6 = [36, 36, 33];
 # img_name = 'castle.jpg'; manual_color_0 = [60, 81, 116]; manual_color_1 = [175, 198, 215]; manual_color_2 = [0, 0, 0]; manual_color_3 = [114, 149, 185]; manual_color_4 = [142, 172, 198]; manual_color_5 = [92, 116, 149]; manual_color_6 = [226, 221, 222];
