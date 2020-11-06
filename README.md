@@ -1,5 +1,5 @@
 # Fast Soft Color Segmentation
-* [Paper Link](https://arxiv.org/abs/2004.08096) 
+* [Paper Link](https://arxiv.org/abs/2004.08096)
 * [Supplimentary Video](https://www.youtube.com/watch?v=chWdaOramB0&feature=youtu.be)
 
 This repository was developed as a part of an internship at Preferred Networks in the summer of 2019.
@@ -21,9 +21,19 @@ If you want to use other images, please change:
 ```
 # image name and palette color values
 img_name = 'apple.jpg'; manual_color_0 = [253, 253, 254]; manual_color_1 = [203, 194, 170]; manual_color_2 = [83, 17, 22]; manual_color_3 = [205, 118, 4]; manual_color_4 = [220, 222, 11]; manual_color_5 = [155, 24, 10]; manual_color_6 = [171, 75, 67];
-```  
+```
 
-```manual_color_X``` means user-specified RGB values. If necessary, K-means algorithm (bottom of the notebook) give you these values.  
+```manual_color_X``` means user-specified RGB values. If necessary, K-means algorithm (bottom of the notebook) give you these values.
+
+### Inference (virtual env)
+```
+virtualenv venv
+source venv/bin/activate
+python3 -m pip install -r requirements.txt
+
+cd src
+python3 inference.py
+```
 
 ## Notes
 - This is developed on a Linux machine running Ubuntu 16.04
