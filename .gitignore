@@ -2,3 +2,4 @@
 .ipynb_checkpoints
 src/results
 __pycache__
+venv/
