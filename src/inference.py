@@ -19,6 +19,44 @@ import cv2
 import os
 import time
 
+
+import numpy as np
+import cv2
+from sklearn.cluster import KMeans
+import pandas as pd
+
+### User inputs
+num_clusters = 7
+img_name = "apple.jpg"
+img_path = "../dataset/test/" + img_name
+
+###
+
+img = cv2.imread(img_path)[:, :, [2, 1, 0]]
+size = img.shape[:2]
+vec_img = img.reshape(-1, 3)
+model = KMeans(n_clusters=num_clusters, n_jobs=-1)
+pred = model.fit_predict(vec_img)
+pred_img = np.tile(pred.reshape(*size, 1), (1, 1, 3))
+
+center = model.cluster_centers_.reshape(-1)
+print(center)
+
+# Reshape for an input
+print("img_name = '%s';" % img_name, end=" ")
+for k, i in enumerate(model.cluster_centers_):
+    print(
+        "manual_color_%d = [" % k
+        + str(i[0].astype("int"))
+        + ", "
+        + str(i[1].astype("int"))
+        + ", "
+        + str(i[2].astype("int"))
+        + "];",
+        end=" ",
+    )
+
+
 #### User inputs
 
 run_name = "sample"
@@ -368,40 +406,4 @@ for i in range(len(pred_unmixed_rgb_layers[0])):
     save_image(
         pred_unmixed_rgb_layers[0, i, :, :, :],
         "results/%s/%s/rgb-00_layer-%02d.png" % (run_name, img_name, i),
-    )
-
-import numpy as np
-import cv2
-from sklearn.cluster import KMeans
-import pandas as pd
-
-### User inputs
-num_clusters = 7
-img_name = "apple.jpg"
-img_path = "../dataset/test/" + img_name
-
-###
-
-img = cv2.imread(img_path)[:, :, [2, 1, 0]]
-size = img.shape[:2]
-vec_img = img.reshape(-1, 3)
-model = KMeans(n_clusters=num_clusters, n_jobs=-1)
-pred = model.fit_predict(vec_img)
-pred_img = np.tile(pred.reshape(*size, 1), (1, 1, 3))
-
-center = model.cluster_centers_.reshape(-1)
-print(center)
-
-# Reshape for an input
-print("img_name = '%s';" % img_name, end=" ")
-for k, i in enumerate(model.cluster_centers_):
-    print(
-        "manual_color_%d = [" % k
-        + str(i[0].astype("int"))
-        + ", "
-        + str(i[1].astype("int"))
-        + ", "
-        + str(i[2].astype("int"))
-        + "];",
-        end=" ",
     )
