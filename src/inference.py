@@ -12,7 +12,7 @@ from torch import nn, optim
 from torch.nn import functional as F
 from torchvision import datasets, transforms
 import torch.backends.cudnn as cudnn
-from torchvision.utils import save_image
+from torchvision.utils import save_image, make_grid
 from net import MaskGenerator, ResiduePredictor
 from mydataset import MyDataset
 import cv2
@@ -25,9 +25,29 @@ import cv2
 from sklearn.cluster import KMeans
 import pandas as pd
 
+def convert_image(tensor, nrow=8, padding=2,
+               normalize=False, range=None, scale_each=False, pad_value=0):
+    """Save a given Tensor into an image file.
+
+    Args:
+        tensor (Tensor or list): Image to be saved. If given a mini-batch tensor,
+            saves the tensor as a grid of images by calling ``make_grid``.
+        **kwargs: Other arguments are documented in ``make_grid``.
+    """
+    from PIL import Image
+    grid = make_grid(tensor, nrow=nrow, padding=padding, pad_value=pad_value,
+                     normalize=normalize, range=range, scale_each=scale_each)
+    # Add 0.5 after unnormalizing to [0, 255] to round to nearest integer
+    ndarr = grid.mul_(255).add_(0.5).clamp_(0, 255).permute(1, 2, 0).to('cpu', torch.uint8).numpy()
+    return ndarr
+
+
 ### User inputs
 num_clusters = 7
-img_name = "screen_shot_2020-11-06_at_10.59.05_am.png"
+img_name = 'apple.jpg'
+# img_name = "1809e672-109d-436d-bf9c-311e3e3c4bda.jpg"
+# img_name = "screen_shot_2020-11-06_at_10.59.05_am.png"
+# img_name = "D_flaggirl_2020ave.jpeg"
 img_path = "../dataset/test/" + img_name
 
 ###
@@ -353,6 +373,16 @@ with torch.no_grad():
                     % (run_name, img_name, batch_idx, i),
                 )
             print("Saved to results/%s/%s/..." % (run_name, img_name))
+
+            from iris.utility.visualization import dump_dict, plot, overlay_masks, outfit_vis
+            import matplotlib.pyplot as plt; plt.ion()
+            primary_color_layers_img = convert_image(primary_color_layers[save_layer_number, :, :, :, :])[:, :, ::-1]
+            reconst_img_img = convert_image(reconst_img[save_layer_number, :, :, :].unsqueeze(0))[:, :, ::-1]
+            target_img_img = convert_image(target_img[save_layer_number, :, :, :].unsqueeze(0))[:, :, ::-1]
+            RGBA_layers_list = [convert_image(RGBA_layers[i, :, :, :])/np.float32(255) for i in range(len(RGBA_layers))]
+            RGBA_layers_list = [img[:, :, [2, 1, 0]] * img[:, :, [3]] for img in RGBA_layers_list]
+            plot([primary_color_layers_img, reconst_img_img, target_img_img] + RGBA_layers_list)
+            import pdb; pdb.set_trace()
 
         if False:
             ### mono_colorの分も保存する ###
